@@ -4,6 +4,7 @@ export const userContext = createContext();
 
 export const ContextProvider = ({ children }) => {
     const [user, setUser] = useState();
+    const [notification, setNotification] = useState("");
     const [token, setToken] = useState(
         localStorage.getItem("ACCESS_TOKEN") || null
     );
@@ -20,21 +21,29 @@ export const ContextProvider = ({ children }) => {
         return;
     };
 
+    const updateNotification = (message) => {
+        setNotification(message);
+
+        setTimeout(() => {
+            setNotification("");
+        }, 5000);
+    };
+
     return (
         <userContext.Provider
             value={{
                 user,
                 token,
+                notification,
                 updateUser,
                 updateToken,
+                updateNotification,
             }}
         >
             {children}
         </userContext.Provider>
     );
 };
-
-// import { createContext, useEffect, useState } from "react";
 
 // export const AuthContext = createContext();
 

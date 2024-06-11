@@ -3,9 +3,10 @@ import { Navigate, Outlet, Link } from "react-router-dom";
 import { userContext } from "../contexts/ContextProdvider";
 
 export default function DefaultLayout() {
-    const { token, updateUser, updateToken } = useContext(userContext);
+    const { token, updateUser, updateToken, notification } =
+        useContext(userContext);
     if (!token) return <Navigate to="/login" />;
-     const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("user"));
 
     const logoutUser = (e) => {
         e.preventDefault();
@@ -35,6 +36,8 @@ export default function DefaultLayout() {
                     <Outlet />
                 </main>
             </div>
+
+            {notification && <div className="notification">{notification}</div>}
         </div>
     );
 }
